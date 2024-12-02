@@ -17,10 +17,9 @@ public class HumanPlayer implements Player {
     @Override
     public long askNextGuess() {
         logger.log("Veuillez entrer votre estimation (nombre) : ");
-        long guess = scanner.nextLong(); // ou autre méthode pour récupérer l'estimation
-        logger.log("Estimation soumise : " + guess);
-        return guess;
+        return scanner.nextLong();
     }
+
     @Override
     public void respond(boolean lowerOrGreater) {
         if (lowerOrGreater) {
