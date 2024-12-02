@@ -19,19 +19,35 @@ public class Simulation {
     private boolean nextRound() {
         long guess = player.askNextGuess();
         if (guess == numberToGuess) {
-            logger.log("Félicitations, vous avez trouvé le nombre !");
+            logger.log("Correct guess!");
             return true;
-        } else {
-            player.respond(guess < numberToGuess);
-            return false;
         }
+        player.respond(guess > numberToGuess);  // Le joueur répond si le nombre est plus grand ou plus petit
+        return false;
     }
 
-    public void loopUntilPlayerSucceed() {
+    public void loopUntilPlayerSucceed(long maxIterations) {
+        long startTime = System.currentTimeMillis();
         boolean success = false;
-        while (!success) {
-            success = nextRound();
+
+        for (long i = 0; i < maxIterations; i++) {
+            if (nextRound()) {
+                success = true;
+                break;
+            }
         }
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+
+        // Format du temps écoulé en mm:ss.SSS
+        long minutes = (duration / 1000) / 60;
+        long seconds = (duration / 1000) % 60;
+        long milliseconds = duration % 1000;
+
+        // Affichage du temps écoulé et du succès
+        logger.log(String.format("Game duration: %02d:%02d.%03d", minutes, seconds, milliseconds));
+        logger.log(success ? "The player succeeded!" : "The player failed to guess the number.");
     }
 }
 
