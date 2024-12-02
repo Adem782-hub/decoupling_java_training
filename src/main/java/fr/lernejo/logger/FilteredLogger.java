@@ -1,7 +1,6 @@
 package fr.lernejo.logger;
 
 import java.util.function.Predicate;
-
 public class FilteredLogger implements Logger {
     private final Logger delegate;
     private final Predicate<String> condition;
